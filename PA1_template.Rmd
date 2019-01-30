@@ -28,7 +28,7 @@ df$date <- as.Date(df$date, "%Y-%m-%d")
 ## What is mean total number of steps taken per day?
 ```{r task1, echo=TRUE}
 ## Tibble with average steps per day
-task1_df <- df %>% group_by(date) %>% summarise_at(vars("steps"), sum)
+task1_df <- df %>% group_by(date) %>% summarise_at(vars("steps"), sum, na.rm=TRUE)
 ###
 ```
 ### Histogram of the total number of steps taken each day
@@ -135,7 +135,7 @@ round(median(task3_df$steps, na.rm = TRUE), 1)
 ```
 
 
-These values do NOT differ from the estimates calculated before data imputation. The impact of imputing missing data on the estimates of the total daily number of steps seems to be negligible.
+These values DO differ from the estimates calculated before data imputation. The impact of imputing missing data on the estimates of the total daily number of steps is that: 1. it made the mean from imputed data to be greater than the mean with missing data; 2. after data imputation, both the mean and median are identical.
 
 
 ## Are there differences in activity patterns between weekdays and weekends?
