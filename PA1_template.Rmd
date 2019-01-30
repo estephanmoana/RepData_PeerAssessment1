@@ -47,7 +47,7 @@ ggplot(task1_df, aes(x=steps)) + geom_histogram()
 
 ## What is the average daily activity pattern?
 ### Time series plot of the average number of steps taken
-```{r task2_Time series, message=F, warning=F, echo=TRUE}
+```{r task2_TimeSeries, message=F, warning=F, echo=TRUE}
 ggplot(data = task2_df, aes(x = interval, y = steps))+
     geom_line()
 ```

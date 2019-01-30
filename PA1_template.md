@@ -57,7 +57,7 @@ ggplot(data = task2_df, aes(x = interval, y = steps))+
     geom_line()
 ```
 
-![](PA1_template_files/figure-html/task2_Time series-1.png)<!-- -->
+![](PA1_template_files/figure-html/task2_TimeSeries-1.png)<!-- -->
 
 
 ```r
