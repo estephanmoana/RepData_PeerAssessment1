@@ -9,7 +9,6 @@ output:
 ## Loading and preprocessing the data
 
 ```r
-#### Initial setup ####
 ### Setting the working directory
 setwd("~/Box/data_HD/_MyDocs/NIH-based grants/K99-R00/03_K99 awarded/Course work/01_Coursera/Course1_Data Science Specialization_John Hopkins U/Course5_Reproducible Research/coursework/week2/CourseProject1/git_files/RepData_PeerAssessment1")
 
@@ -23,20 +22,17 @@ library(gridExtra)
 df <- read.csv(unz("activity.zip", "activity.csv"), stringsAsFactors = FALSE)
 ### Converting date
 df$date <- as.Date(df$date, "%Y-%m-%d")
-
-### For task 1
-## Tibble with average steps per day
-task1_df <- df %>% group_by(date) %>% summarise_at(vars("steps"), mean, na.rm = TRUE)
-###
-
-### For task 2
-## Tibble with average number of steps taken per 5-min, averaged across all days
-task2_df <- df %>% group_by(interval) %>% summarise_at(vars("steps"), mean, na.rm = TRUE)
 ###
 ```
 
 
 ## What is mean total number of steps taken per day?
+
+```r
+## Tibble with average steps per day
+task1_df <- df %>% group_by(date) %>% summarise_at(vars("steps"), sum)
+###
+```
 ### Histogram of the total number of steps taken each day
 
 ```r
@@ -46,10 +42,35 @@ ggplot(task1_df, aes(x=steps)) + geom_histogram()
 ![](PA1_template_files/figure-html/task1_histogram-1.png)<!-- -->
 
 ### Mean and median number of steps taken each day
-#### The mean is 37.4, and the median is 37.4
+#### Mean 
+
+```r
+round(mean(task1_df$steps, na.rm = TRUE), 1)
+```
+
+```
+## [1] 10766.2
+```
+
+
+#### Median
+
+```r
+round(median(task1_df$steps, na.rm = TRUE), 1)
+```
+
+```
+## [1] 10765
+```
 
 
 ## What is the average daily activity pattern?
+
+```r
+## Tibble with average number of steps taken per 5-min, averaged across all days
+task2_df <- df %>% group_by(interval) %>% summarise_at(vars("steps"), mean, na.rm=TRUE)
+```
+
 ### Time series plot of the average number of steps taken
 
 ```r
@@ -59,15 +80,18 @@ ggplot(data = task2_df, aes(x = interval, y = steps))+
 
 ![](PA1_template_files/figure-html/task2_TimeSeries-1.png)<!-- -->
 
+#### The 5-minute interval that, on average, contains the maximum number of steps
 
 ```r
 # Find index of max value for steps
 rowindex_max <- as.numeric(which.max(task2_df$steps))
 # Output 5-min interval matching the index above
-max_steps_interval <- task2_df$interval[rowindex_max]
+task2_df$interval[rowindex_max]
 ```
 
-#### The 5-minute interval that, on average, contains the maximum number of steps is 835
+```
+## [1] 835
+```
 
 
 ## Imputing missing values
@@ -106,12 +130,20 @@ df_filled$steps <- steps_datfill
 
 # Step 3: Make a histogram of the total number of steps taken each day and Calculate and report the mean and median total number of steps taken per day
 ## Tibble with average steps per day
-task3_df <- df_filled %>% group_by(date) %>% summarise_at(vars("steps"), mean, na.rm = TRUE)
+task3_df <- df_filled %>% group_by(date) %>% summarise_at(vars("steps"), sum)
 ###
 ```
 
 
-#### Total number of missing values in the dataset is 2304
+#### Total number of missing values in the dataset
+
+```r
+sum(is.na(df))
+```
+
+```
+## [1] 2304
+```
 
 
 ### Histogram of the total number of steps taken each day after missing values are imputed
@@ -123,7 +155,27 @@ ggplot(task3_df, aes(x=steps)) + geom_histogram()
 ![](PA1_template_files/figure-html/task3_histogram-1.png)<!-- -->
 
 
-#### The mean is 37.4, and the median is 37.4
+### Mean and median number of steps taken each day
+#### Mean 
+
+```r
+round(mean(task3_df$steps, na.rm = TRUE), 1)
+```
+
+```
+## [1] 10766.2
+```
+
+
+#### Median
+
+```r
+round(median(task3_df$steps, na.rm = TRUE), 1)
+```
+
+```
+## [1] 10766.2
+```
 
 
 ## Are there differences in activity patterns between weekdays and weekends?
