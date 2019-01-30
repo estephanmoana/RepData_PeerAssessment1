@@ -2,7 +2,7 @@
 title: "Reproducible Research: Peer Assessment 1"
 output: 
   html_document:
-    keep_md: true
+    keep_md: yes
 ---
 
 
@@ -43,7 +43,7 @@ task2_df <- df %>% group_by(interval) %>% summarise_at(vars("steps"), mean, na.r
 ggplot(task1_df, aes(x=steps)) + geom_histogram()
 ```
 
-![](PA1_template_files/figure-html/task 1 histogram-1.png)<!-- -->
+![](PA1_template_files/figure-html/task1_histogram-1.png)<!-- -->
 
 ### Mean and median number of steps taken each day
 #### The mean is 37.4, and the median is 37.4
@@ -57,7 +57,7 @@ ggplot(data = task2_df, aes(x = interval, y = steps))+
     geom_line()
 ```
 
-![](PA1_template_files/figure-html/task 2 Time series-1.png)<!-- -->
+![](PA1_template_files/figure-html/task2_Time series-1.png)<!-- -->
 
 
 ```r
@@ -120,7 +120,7 @@ task3_df <- df_filled %>% group_by(date) %>% summarise_at(vars("steps"), mean, n
 ggplot(task3_df, aes(x=steps)) + geom_histogram()
 ```
 
-![](PA1_template_files/figure-html/task 3 histogram-1.png)<!-- -->
+![](PA1_template_files/figure-html/task3_histogram-1.png)<!-- -->
 
 
 #### The mean is 37.4, and the median is 37.4
@@ -161,4 +161,4 @@ p_wkend <- ggplot(data = task4b_df, aes(x = interval, y = steps)) + geom_line() 
 grid.arrange(p_wkend, p_wkdays, ncol = 1)
 ```
 
-![](PA1_template_files/figure-html/task 4 panel plot-1.png)<!-- -->
+![](PA1_template_files/figure-html/task4_panelplot-1.png)<!-- -->

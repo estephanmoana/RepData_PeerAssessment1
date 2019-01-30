@@ -2,7 +2,7 @@
 title: "Reproducible Research: Peer Assessment 1"
 output: 
   html_document:
-    keep_md: true
+    keep_md: yes
 ---
 
 
@@ -37,7 +37,7 @@ task2_df <- df %>% group_by(interval) %>% summarise_at(vars("steps"), mean, na.r
 
 ## What is mean total number of steps taken per day?
 ### Histogram of the total number of steps taken each day
-```{r task 1 histogram, message=F, warning=F, echo=TRUE}
+```{r task1_histogram, message=F, warning=F, echo=TRUE}
 ggplot(task1_df, aes(x=steps)) + geom_histogram()
 ```
 
@@ -47,12 +47,12 @@ ggplot(task1_df, aes(x=steps)) + geom_histogram()
 
 ## What is the average daily activity pattern?
 ### Time series plot of the average number of steps taken
-```{r task 2 Time series, message=F, warning=F, echo=TRUE}
+```{r task2_Time series, message=F, warning=F, echo=TRUE}
 ggplot(data = task2_df, aes(x = interval, y = steps))+
     geom_line()
 ```
 
-```{r task 2 Max number of steps, echo=TRUE}
+```{r task2_MaxNsteps, echo=TRUE}
 # Find index of max value for steps
 rowindex_max <- as.numeric(which.max(task2_df$steps))
 # Output 5-min interval matching the index above
@@ -64,7 +64,7 @@ max_steps_interval <- task2_df$interval[rowindex_max]
 
 ## Imputing missing values
 ### Code to describe and show a strategy for imputing missing data
-```{r task 3, echo=TRUE}
+```{r task3, echo=TRUE}
 ## Create a new dataset that is equal to the original dataset but with the missing data filled in
 ## Strategy: use the mean number of steps per 5-min interval to fill NA values in the respective 5-min interval
 # Step 1: Loop to substitute the NA values for the respective mean steps within the 5-min interval
@@ -106,7 +106,7 @@ task3_df <- df_filled %>% group_by(date) %>% summarise_at(vars("steps"), mean, n
 
 
 ### Histogram of the total number of steps taken each day after missing values are imputed
-```{r task 3 histogram, message=F, warning=F, echo=TRUE}
+```{r task3_histogram, message=F, warning=F, echo=TRUE}
 ggplot(task3_df, aes(x=steps)) + geom_histogram()
 ```
 
@@ -115,7 +115,7 @@ ggplot(task3_df, aes(x=steps)) + geom_histogram()
 
 
 ## Are there differences in activity patterns between weekdays and weekends?
-```{r task 4, echo=TRUE}
+```{r task4, echo=TRUE}
 # Create a vector of weekdays
 weekday_labels <- c('Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday')
 
@@ -138,7 +138,7 @@ task4b_df <- df_filled_wkend %>% group_by(interval) %>% summarise_at(vars("steps
 
 
 ### Panel plot comparing the average number of steps taken per 5-minute interval across weekdays and weekends
-```{r task 4 panel plot, message=F, warning=F, echo=TRUE}
+```{r task4_panelplot, message=F, warning=F, echo=TRUE}
 ## Time series plot of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all weekday days or weekend days (y-axis)
 p_wkdays <- ggplot(data = task4a_df, aes(x = interval, y = steps)) + geom_line() + ggtitle("Weekdays") + ylim(0,250)
 p_wkend <- ggplot(data = task4b_df, aes(x = interval, y = steps)) + geom_line()  + ggtitle("Weekend") + ylim(0,250)
