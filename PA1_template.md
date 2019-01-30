@@ -155,7 +155,7 @@ ggplot(task3_df, aes(x=steps)) + geom_histogram()
 ![](PA1_template_files/figure-html/task3_histogram-1.png)<!-- -->
 
 
-### Mean and median number of steps taken each day
+### Mean and median number of steps taken each day after missing values are imputed
 #### Mean 
 
 ```r
@@ -176,6 +176,9 @@ round(median(task3_df$steps, na.rm = TRUE), 1)
 ```
 ## [1] 10766.2
 ```
+
+
+These values do NOT differ from the estimates calculated before data imputation. The impact of imputing missing data on the estimates of the total daily number of steps seems to be negligible.
 
 
 ## Are there differences in activity patterns between weekdays and weekends?
